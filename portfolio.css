@@ -63,18 +63,21 @@ body {
 }
 
 /* Circular Developer Image */
-.devpic img {
-  height: 320px;
-  width: 320px;
-  object-fit: cover;
+.devpic {
+  width: 250px; /* Adjust size for laptop view */
+  height: 250px;
   border-radius: 50%;
-  box-shadow: 0 15px 30px rgba(58, 141, 253, 0.25);
+  object-fit: cover;
   border: 4px solid white;
-  transition: transform 0.4s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  margin: 0 auto; /* Center it */
 }
 
-.devpic img:hover {
+.devpic:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Developer Info Text */
