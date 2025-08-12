@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Divyansh - Developer, Student, and Explorer. BITS Pilani student showcasing web development projects and skills.">
+    <meta name="keywords" content="Divyansh, Developer, Student, BITS Pilani, Web Development, Portfolio">
+    <meta name="author" content="Divyansh">
+    
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Divyansh - Developer Portfolio">
+    <meta property="og:description" content="Developer, Student, and Explorer from BITS Pilani">
+    <meta property="og:image" content="Screenshot 2025-07-29 at 2.14.31 PM.png">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="portfolio.css" as="style">
+    <link rel="preload" href="Screenshot 2025-07-29 at 2.14.31 PM.png" as="image">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="portfolio.css">
+    
+    <!-- Page Title -->
+    <title>Divyansh - Developer Portfolio | BITS Pilani Student</title>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" role="navigation" aria-label="Main navigation">
+            <nav>
+                <ul role="list">
+                    <li><a href="/" aria-current="page">Home</a></li>
+                    <li><a href="/intro.html">My Intro</a></li>
+                   
+                   
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main" id="main-content" role="main">
+            <section class="info" aria-labelledby="intro-heading">
+                <!-- Developer Information -->
+                <div class="devinfo">
+                    <div class="hello" aria-label="Greeting">Hi, I am</div>
+                    <h1 class="name" id="intro-heading">Divyansh</h1>
+                    <h2 class="about">Developer, Student, Explorer</h2>
+                    <p class="moreabout">
+                        I am a developer and I live in Gurgaon. I am a student of BITS Pilani, Pilani Campus, 
+                        passionate about creating innovative web solutions and exploring new technologies.
+                    </p>
+                    
+                    <!-- Call to Action Buttons -->
+                    <div class="button" role="group" aria-label="Main actions">
+                       
+                        <a href="/contact.html" aria-label="Go to contact page">
+                            <button type="button">Contact Me</button>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Developer Picture -->
+                <div class="devpic">
+                    <img src="Screenshot 2025-07-29 at 2.14.31 PM.png" 
+                         alt="Divyansh - A professional photo of the developer" 
+                         loading="lazy"
+                         width="400" 
+                         height="400">
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Hamburger Menu JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const body = document.body;
+            
+            if (hamburger && sidebar) {
+                
+                // Toggle sidebar when hamburger is clicked
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    toggleSidebar();
+                });
+                
+                // Close sidebar when clicking overlay
+                if (overlay) {
+                    overlay.addEventListener('click', closeSidebar);
+                }
+                
+                // Close sidebar when clicking outside
+                document.addEventListener('click', function(e) {
+                    const isClickInsideSidebar = sidebar.contains(e.target);
+                    const isClickOnHamburger = hamburger.contains(e.target);
+                    
+                    if (!isClickInsideSidebar && !isClickOnHamburger && sidebar.classList.contains('active')) {
+                        closeSidebar();
+                    }
+                });
+                
+                // Close sidebar with Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                        closeSidebar();
+                    }
+                });
+                
+                // Close sidebar when clicking nav links on mobile
+                const navLinks = sidebar.querySelectorAll('nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (window.innerWidth <= 768) {
+                            closeSidebar();
+                        }
+                    });
+                });
+                
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+                        closeSidebar();
+                    }
+                });
+            }
+            
+            // Toggle sidebar function
+            function toggleSidebar() {
+                const isActive = sidebar.classList.contains('active');
+                
+                hamburger.classList.toggle('active');
+                sidebar.classList.toggle('active');
+                if (overlay) overlay.classList.toggle('active');
+                
+                // Update ARIA attributes
+                hamburger.setAttribute('aria-expanded', !isActive);
+                
+                // Prevent body scroll when sidebar is open
+                if (!isActive) {
+                    body.style.overflow = 'hidden';
+                } else {
+                    body.style.overflow = '';
+                }
+            }
+            
+            // Close sidebar function
+            function closeSidebar() {
+                hamburger.classList.remove('active');
+                sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                body.style.overflow = '';
+            }
+            
+            // Touch gestures for mobile
+            let startX = null;
+            let startY = null;
+            
+            document.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (!startX || !startY) return;
+                
+                const deltaX = e.touches[0].clientX - startX;
+                const deltaY = e.touches[0].clientY - startY;
+                
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    // Swipe right from left edge - open sidebar
+                    if (startX < 50 && deltaX > 50 && !sidebar.classList.contains('active')) {
+                        toggleSidebar();
+                    }
+                    // Swipe left when sidebar is open - close sidebar
+                    else if (deltaX < -50 && sidebar.classList.contains('active')) {
+                        closeSidebar();
+                    }
+                }
+                
+                startX = null;
+                startY = null;
+            });
+            
+            document.addEventListener('touchend', function() {
+                startX = null;
+                startY = null;
+            });
+        });
+    </script>
+
+    <!-- Optional: Add structured data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Divyansh",
+        "jobTitle": "Developer",
+        "description": "Developer, Student, and Explorer",
+        "affiliation": {
+            "@type": "EducationalOrganization",
+            "name": "BITS Pilani"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Gurgaon",
+            "addressCountry": "IN"
+        },
+        "url": "https://yourwebsite.com"
+    }
+    </script>
+</body>
+</html>
